@@ -8,11 +8,20 @@ public class Door_OC : MonoBehaviour
     public float openSpeed = 2.0f;
     public bool ifBack = false;
     public GameObject Door;
-    public AudioSource sound;
+    public AudioClip soundEffect;
+    public AudioSource audioSource;
 
     private bool isOpening = false;
     private float currentAngle = 0.0f;
 
+    void Start()
+    {
+        // 确保音频源组件已经被指定
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
+    }
     void Update()
     {
         if (isOpening)
@@ -37,7 +46,11 @@ public class Door_OC : MonoBehaviour
         {
             isOpening = true;
         }
-        sound.Play();
+       // 如果指定了音效并且音频源组件存在
+            if (soundEffect != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(soundEffect); // 播放音效
+        }
     }
 
     private void OnTriggerExit(Collider other)

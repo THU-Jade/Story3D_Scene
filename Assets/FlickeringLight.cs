@@ -4,25 +4,52 @@ using UnityEngine;
 
 public class FlickeringLight : MonoBehaviour
 {
-    public float minIntensity = 0f;
-    public float maxIntensity = 1f;
-    public float flickerSpeed = 0.1f;
+    public Light targetLight; // 公开的灯光组件
+    public float minIntensity = 0f; // 最小亮度
+    public float maxIntensity = 1f; // 最大亮度
+    public float flickerSpeed = 0.1f; // 闪烁速度
 
-    private Light myLight;
-    private float random;
+    private float originalIntensity; // 原始亮度
+    private Coroutine flickerCoroutine; // 闪烁协程的引用
 
     void Start()
     {
-        myLight = GetComponent<Light>();
-        StartCoroutine(Flicker());
+        if (targetLight == null)
+        {
+            targetLight = GetComponent<Light>();
+        }
+        originalIntensity = targetLight.intensity; // 保存原始亮度
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.name == "FPSController")
+        {
+            if (flickerCoroutine != null)
+            {
+                StopCoroutine(flickerCoroutine);
+            }
+            flickerCoroutine = StartCoroutine(Flicker());
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.name == "FPSController")
+        {
+            if (flickerCoroutine != null)
+            {
+                StopCoroutine(flickerCoroutine);
+                targetLight.intensity = originalIntensity; // 恢复原始亮度
+            }
+        }
     }
 
     private IEnumerator Flicker()
     {
         while (true)
         {
-            random = Random.Range(minIntensity, maxIntensity);
-            myLight.intensity = random;
+            targetLight.intensity = Random.Range(minIntensity, maxIntensity);
             yield return new WaitForSeconds(flickerSpeed);
         }
     }
