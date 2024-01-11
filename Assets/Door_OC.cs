@@ -11,6 +11,10 @@ public class Door_OC : MonoBehaviour
     public AudioClip soundEffect;
     public AudioSource audioSource;
 
+    public GameObject CanvasText;
+    private bool canvasActive = false;
+    private float textTime;
+
     private bool isOpening = false;
     private float currentAngle = 0.0f;
 
@@ -38,6 +42,17 @@ public class Door_OC : MonoBehaviour
                 RotateDoor(-openSpeed * Time.deltaTime);
             }
         }
+        if (canvasActive)
+        {
+            textTime += Time.deltaTime;
+            print(textTime);
+            if(textTime >= 5.0f)
+            {
+                CanvasText.SetActive(false);
+                textTime = 0;
+                canvasActive = false;
+            }
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -45,6 +60,8 @@ public class Door_OC : MonoBehaviour
         if (other.gameObject.name == "FPSController")
         {
             isOpening = true;
+            CanvasText.SetActive(true);
+            canvasActive = true;
         }
        // 如果指定了音效并且音频源组件存在
             if (soundEffect != null && audioSource != null)
