@@ -20,7 +20,7 @@ public class Door_OC : MonoBehaviour
 
     void Start()
     {
-        // È·±£ÒôÆµÔ´×é¼þÒÑ¾­±»Ö¸¶¨
+        // È·ï¿½ï¿½ï¿½ï¿½ÆµÔ´ï¿½ï¿½ï¿½ï¿½Ñ¾ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
         if (audioSource == null)
         {
             audioSource = gameObject.AddComponent<AudioSource>();
@@ -63,10 +63,10 @@ public class Door_OC : MonoBehaviour
             CanvasText.SetActive(true);
             canvasActive = true;
         }
-       // Èç¹ûÖ¸¶¨ÁËÒôÐ§²¢ÇÒÒôÆµÔ´×é¼þ´æÔÚ
+       // ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÆµÔ´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             if (soundEffect != null && audioSource != null)
         {
-            audioSource.PlayOneShot(soundEffect); // ²¥·ÅÒôÐ§
+            audioSource.PlayOneShot(soundEffect); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð§
         }
     }
 
@@ -84,7 +84,7 @@ public class Door_OC : MonoBehaviour
         Door.transform.Rotate(0, rotationAngle, 0);
         currentAngle += Mathf.Abs(angleToRotate);
 
-        // È·±£currentAngle²»³¬¹ýopenAngle£¬²¢ÇÒÔÚ¹Ø±ÕÊ±¹éÁã
+        // È·ï¿½ï¿½currentAngleï¿½ï¿½ï¿½ï¿½ï¿½ï¿½openAngleï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¹Ø±ï¿½Ê±ï¿½ï¿½ï¿½ï¿½
         if (isOpening)
         {
             currentAngle = Mathf.Min(currentAngle, openAngle);
