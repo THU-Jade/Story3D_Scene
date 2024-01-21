@@ -9,6 +9,7 @@ public class TriggerForce : MonoBehaviour
     public ForceMode forceMode = ForceMode.Force; // 施加力的方式
     public AudioClip soundEffect; // 要播放的音效
     public AudioSource audioSource; // 音频源组件
+    public bool Play = false; 
     private bool DoOnce = true;
 
     private void Start()
@@ -17,6 +18,22 @@ public class TriggerForce : MonoBehaviour
         if (audioSource == null)
         {
             audioSource = gameObject.AddComponent<AudioSource>();
+        }
+    }
+
+    private void Update()
+    {
+        if (Play && DoOnce)
+        {
+            // 如果指定了音效并且音频源组件存在
+            if (soundEffect != null && audioSource != null)
+            {
+                audioSource.PlayOneShot(soundEffect); // 播放音效
+            }
+
+            // 给目标刚体施加力
+            targetRigidbody.AddForce(force, forceMode);
+            DoOnce = false;
         }
     }
 
